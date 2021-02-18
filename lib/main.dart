@@ -36,10 +36,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.archive, this.fileNameMap}) : super(key: key);
 
   final Archive archive;
   final Map<int, String> fileNameMap;
+
+  const MyHomePage({
+    Key key,
+    @required this.archive,
+    @required this.fileNameMap,
+  }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
