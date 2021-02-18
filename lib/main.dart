@@ -6,16 +6,22 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
-void main() {
-  runApp(MyApp());
+void main(List<String> args) {
+  runApp(MyApp(args[0]));
 }
 
 class MyApp extends StatelessWidget {
 
+  final String archiveFilePath;
+
+  const MyApp(
+    this.archiveFilePath
+  );
+
   @override
   Widget build(BuildContext context) {
 
-    File file = new File('C:/Users/j.tosovsky/Downloads/150-02792.zip');
+    final File file = new File(archiveFilePath);
     Archive archive = ZipDecoder().decodeBytes(file.readAsBytesSync());
 
     List<String> fileNameList = archive
