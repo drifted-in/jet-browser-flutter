@@ -74,12 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateImage(int index) {
-    setState(() {
-      currentImageIndex = index;
-      fileName = widget.fileNameMap[index];
-      archiveFile = widget.archive.findFile(fileName);
-      image = new Image.memory(archiveFile.content);
-    });
+    currentImageIndex = index;
+    fileName = widget.fileNameMap[index];
+    archiveFile = widget.archive.findFile(fileName);
+    var imageData = new MemoryImage(archiveFile.content);
+    imageData
+        .resolve(ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo _, bool __) {
+      if (mounted) {
+        setState(() {
+          image = new Image(image: imageData);
+        });
+      }
+    }));
   }
 
   void updateWidgetSize(Size widgetSize) {
