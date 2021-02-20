@@ -24,18 +24,18 @@ class MyApp extends StatelessWidget {
     final File file = new File(archiveFilePath);
     Archive archive = ZipDecoder().decodeBytes(file.readAsBytesSync());
 
-    List<String> fileNameList = archive
+    List<String> filePathList = archive
         .where((archiveFile) => (archiveFile.isFile && archiveFile.name.toLowerCase().endsWith(".jpg")))
         .map((archiveFile) => archiveFile.name)
         .toList();
 
-    Map<int, String> fileNameMap = fileNameList.asMap();
+    Map<int, String> filePathMap = filePathList.asMap();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(
           archive: archive,
-          fileNameMap: fileNameMap
+          filePathMap: filePathMap
       ),
     );
   }
