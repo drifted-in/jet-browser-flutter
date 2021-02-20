@@ -194,14 +194,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 initTransformationController();
               }
             },
-            child: InteractiveViewer(
-              transformationController: transformationController,
-              constrained: false,
-              maxScale: 5.0,
-              minScale: 0.01,
-              boundaryMargin: EdgeInsets.all(double.infinity),
-              child: (transformationController == null) ? Container() : image,
-            ),
+            child: Stack(
+              children: <Widget>[
+                InteractiveViewer(
+                  transformationController: transformationController,
+                  constrained: false,
+                  maxScale: 5.0,
+                  minScale: 0.01,
+                  boundaryMargin: EdgeInsets.all(double.infinity),
+                  child: (transformationController == null) ? Container() : image,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    color: Color.fromRGBO(50, 50, 50, 80),
+                    padding: EdgeInsets.all(3.0),
+                    child: Text(
+                      fileName,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ],
+            )
           ),
         ),
       ),
