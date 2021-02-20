@@ -44,12 +44,12 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
 
   final Archive archive;
-  final Map<int, String> fileNameMap;
+  final Map<int, String> filePathMap;
 
   const MyHomePage({
     Key key,
     @required this.archive,
-    @required this.fileNameMap,
+    @required this.filePathMap,
   }) : super(key: key);
 
   @override
@@ -59,7 +59,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  String fileName;
+  String filePath;
   ArchiveFile archiveFile;
   Image image;
   Size widgetSize;
@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateImage(int index) {
     currentImageIndex = index;
-    fileName = widget.fileNameMap[index];
-    archiveFile = widget.archive.findFile(fileName);
+    filePath = widget.filePathMap[index];
+    archiveFile = widget.archive.findFile(filePath);
     var imageData = new MemoryImage(archiveFile.content);
     imageData
         .resolve(ImageConfiguration())
@@ -139,14 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
       if (keyEvent.isKeyPressed(LogicalKeyboardKey.home)) {
         newImageIndex = 0;
       } else if (keyEvent.isKeyPressed(LogicalKeyboardKey.end)) {
-        newImageIndex = widget.fileNameMap.length - 1;
+        newImageIndex = widget.filePathMap.length - 1;
       } else {
         int delta = keyEvent.isControlPressed ? 20 : (keyEvent.isShiftPressed ? 5 : 1);
 
         if (keyEvent.isKeyPressed(LogicalKeyboardKey.arrowLeft)) {
           newImageIndex = max(currentImageIndex - delta, 0);
         } else if (keyEvent.isKeyPressed(LogicalKeyboardKey.arrowRight)) {
-          newImageIndex = min(currentImageIndex + delta, widget.fileNameMap.length - 1);
+          newImageIndex = min(currentImageIndex + delta, widget.filePathMap.length - 1);
         }
       }
 
@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
         transformationController = new TransformationController(Matrix4.identity());
       });
     } else if (keyEvent.isKeyPressed(LogicalKeyboardKey.keyC)) {
-      Clipboard.setData(new ClipboardData(text: fileName));
+      Clipboard.setData(new ClipboardData(text: filePath));
     }
   }
 
