@@ -60,11 +60,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   String filePath;
+  String fileName;
   ArchiveFile archiveFile;
+  int currentImageIndex;
   Image image;
   Size widgetSize;
   TransformationController transformationController;
-  int currentImageIndex;
   FocusNode focusNode = FocusNode();
 
   @override
@@ -76,6 +77,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateImage(int index) {
     currentImageIndex = index;
     filePath = widget.filePathMap[index];
+    if (filePath.contains("/")) {
+      fileName = filePath.split("/").last;
+    } else {
+      fileName = filePath;
+    }
     archiveFile = widget.archive.findFile(filePath);
     var imageData = new MemoryImage(archiveFile.content);
     imageData
@@ -168,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
         transformationController = new TransformationController(Matrix4.identity());
       });
     } else if (keyEvent.isKeyPressed(LogicalKeyboardKey.keyC)) {
-      Clipboard.setData(new ClipboardData(text: filePath));
+      Clipboard.setData(new ClipboardData(text: fileName));
     }
   }
 
