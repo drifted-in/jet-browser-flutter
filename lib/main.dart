@@ -128,6 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
       if (scale != 1.0) {
         matrix.scale(scale);
       }
+
+      if (fit == BoxFit.fitHeight) {
+        double offsetX = (widgetSize.width - scale * image.width) / (2 * scale);
+        matrix.translate(offsetX);
+      }
     }
 
     return matrix;
